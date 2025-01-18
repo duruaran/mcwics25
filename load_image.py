@@ -1,13 +1,13 @@
 import face_recognition
 import cv2
 
-image = face_recognition.load_image_file("input.jpg")
-face_locations = face_recognition.face_locations(image)
+# image = face_recognition.load_image_file("input.jpg")
+# face_locations = face_recognition.face_locations(image)
+#
+# top, right, bottom, left = face_locations[0]
+# face_image = image[top:bottom, left:right]
 
-top, right, bottom, left = face_locations[0]
-face_image = image[top:bottom, left:right]
-
-test_images = ["image1.jpg", "image2.jpg", "no_face.jpg"]
+test_images = ["testing_images/image1.jpeg", "testing_images/image2.jpg", "testing_images/image3.jpg", "testing_images/image4.jpeg", "testing_images/no_face.jpeg"]
 for img_path in test_images:
     image = face_recognition.load_image_file(img_path)
     face_locations = face_recognition.face_locations(image)
