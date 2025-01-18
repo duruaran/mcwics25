@@ -92,6 +92,7 @@ def generate_pdf(file_name, avg_skin_tone, season, jewelry):
 def analyze():
     file = request.files["image"]
     file_path = os.path.join(UPLOAD_FOLDER, file.filename)
+
     file.save(file_path)
 
     # Process the image
