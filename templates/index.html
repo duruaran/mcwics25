@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skin Tone Analysis</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Skin Tone Analysis</h1>
+        <p>Upload your photo to determine your seasonal color type and download your result as a PDF.</p>
+        <form id="upload-form" enctype="multipart/form-data">
+            <input type="file" id="image" name="image" accept="image/*" required>
+            <button type="submit">Upload and Analyze</button>
+        </form>
+        <div id="result" class="hidden"></div>
+    </div>
+    <script src="/static/js/script.js"></script>
+</body>
+</html>

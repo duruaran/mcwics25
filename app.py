@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, request, jsonify, send_file, render_template
 import os
 import face_recognition
 import cv2
@@ -10,7 +10,7 @@ from sklearn.cluster import KMeans
 app = Flask(__name__)
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
-UPLOAD_FOLDER = os.path.join(current_dir, "uploads")
+UPLOAD_FOLDER = os.path.join(current_dir, "static/uploads")
 RESULTS_FOLDER = os.path.join(current_dir, "results")
 TEMPLATES_FOLDER = os.path.join(current_dir, "pdf_templates")
 
@@ -18,23 +18,9 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(RESULTS_FOLDER, exist_ok=True)
 os.makedirs(TEMPLATES_FOLDER, exist_ok=True)
 
-# Mapping seasons to template filenames
-palette_templates = {
-    "Bright Winter": "bright_winter_template.pdf",
-    "True Winter": "true_winter_template.pdf",
-    "Dark Winter": "dark_winter_template.pdf",
-    "Bright Spring": "bright_spring_template.pdf",
-    "True Spring": "true_spring_template.pdf",
-    "Light Spring": "light_spring_template.pdf",
-    "Light Summer": "light_summer_template.pdf",
-    "True Summer": "true_summer_template.pdf",
-    "Soft Summer": "soft_summer_template.pdf",
-    "Soft Autumn": "soft_autumn_template.pdf",
-    "True Autumn": "true_autumn_template.pdf",
-    "Dark Autumn": "dark_autumn_template.pdf",
-}
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-# Define seasonal colors and train KMeans model
+# Seasonal palettes and KMeans setup
 palette_colors = {
     "Bright Winter": [[255, 0, 0], [0, 0, 255], [255, 255, 255], [0, 255, 255]],
     "True Winter": [[0, 0, 139], [139, 0, 139], [255, 255, 255], [25, 25, 112]],
@@ -55,7 +41,32 @@ y = np.array([season for season, colors in palette_colors.items() for _ in color
 classifier = KMeans(n_clusters=len(palette_colors), random_state=42)
 classifier.fit(X)
 
-# Detect skin tone and season
+# Serve the index page
+@app.route("/")
+def home():
+    return render_template("index.html")
+
+# Analyze route for processing images
+@app.route("/analyze", methods=["POST"])
+def analyze():
+    if "image" not in request.files:
+        return jsonify({"error": "No 'image' file in the request."}), 400
+
+    file = request.files["image"]
+    file_path = os.path.join(UPLOAD_FOLDER, file.filename)
+    file.save(file_path)
+
+    avg_skin_tone, season = detect_skin_tone_and_season(file_path)
+    if avg_skin_tone is not None:
+        template_path = os.path.join(TEMPLATES_FOLDER, f"{season.lower().replace(' ', '_')}_template.pdf")
+        output_pdf_path = os.path.join(RESULTS_FOLDER, f"{file.filename.split('.')[0]}_results.pdf")
+        overlay_image_on_template(template_path, file_path, output_pdf_path)
+
+        return send_file(output_pdf_path, as_attachment=True)
+    else:
+        return jsonify({"error": season}), 400
+
+# Helper functions
 def detect_skin_tone_and_season(image_path):
     try:
         image = face_recognition.load_image_file(image_path)
@@ -83,7 +94,6 @@ def detect_skin_tone_and_season(image_path):
     except Exception as e:
         return None, str(e)
 
-# Overlay the face image onto the template
 def overlay_image_on_template(template_path, face_image_path, output_pdf_path):
     try:
         from reportlab.pdfgen import canvas
@@ -108,25 +118,6 @@ def overlay_image_on_template(template_path, face_image_path, output_pdf_path):
             writer.write(output_file)
     except Exception as e:
         print(f"ERROR: Failed to overlay image on template. {e}")
-
-@app.route("/analyze", methods=["POST"])
-def analyze():
-    if "image" not in request.files:
-        return jsonify({"error": "No 'image' file in the request."}), 400
-
-    file = request.files["image"]
-    file_path = os.path.join(UPLOAD_FOLDER, file.filename)
-    file.save(file_path)
-
-    avg_skin_tone, season = detect_skin_tone_and_season(file_path)
-    if avg_skin_tone is not None:
-        template_path = os.path.join(TEMPLATES_FOLDER, palette_templates[season])
-        output_pdf_path = os.path.join(RESULTS_FOLDER, f"{file.filename.split('.')[0]}_results.pdf")
-        overlay_image_on_template(template_path, file_path, output_pdf_path)
-
-        return send_file(output_pdf_path, as_attachment=True)
-    else:
-        return jsonify({"error": season}), 400
 
 if __name__ == "__main__":
     app.run(debug=True)
