@@ -11,11 +11,12 @@ body {
 }
 
 /* Navigation Bar */
+/* Updated Navigation Bar Styles */
 nav {
     background-color: #a88f7d; /* Earthy color for the navbar */
     padding: 10px 20px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between; /* Separate logo and links */
     align-items: center;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     position: fixed;
@@ -23,19 +24,34 @@ nav {
     width: 100%;
     z-index: 1000;
     height: 60px; /* Fixed navbar height */
+    box-sizing: border-box; /* Ensure padding is included in the width calculation */
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px; /* Add space between links */
+    margin-right: 10px; /* Add slight padding on the right side */
 }
 
 nav a {
     color: white;
     text-decoration: none;
-    margin: 0 15px;
     font-size: 1rem;
     font-weight: bold;
+    padding: 0 10px; /* Add padding inside each link */
     transition: color 0.3s ease;
+    white-space: nowrap; /* Prevent text wrapping */
 }
 
 nav a:hover {
     color: #f5e3d6; /* Lighter hover effect */
+}
+
+/* Ensure the navbar stays within bounds */
+nav .nav-logo img {
+    height: 65px; /* Adjust logo size */
+    width: auto; /* Maintain aspect ratio */
+    margin-left: 10px; /* Add space on the left side */
 }
 
 /* Page Layout */
@@ -109,6 +125,7 @@ footer {
     bottom: 0;
     width: 100%;
 }
+
 /* Overview Section Styles */
 .overview-content {
     margin-top: 20px; /* Push the title slightly down */
@@ -130,3 +147,4 @@ footer {
     font-weight: bold;
     max-width: 100%;
 }
+

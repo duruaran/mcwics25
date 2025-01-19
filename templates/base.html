@@ -7,14 +7,18 @@
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav>
-        <a href="/">Home</a>
-        <a href="/Overview">Overview</a>
-        <a href="/references">References</a>
+    <nav class="navbar">
+        <!-- Logo Section -->
+        <div class="nav-logo">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+        </div>
+        <!-- Navigation Links Section -->
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/Overview">Overview</a>
+            <a href="/references">References</a>
+        </div>
     </nav>
-
-    <!-- Main Content -->
     <main class="page-layout">
         <!-- Left Content Section -->
         <div class="content-section">
@@ -26,8 +30,6 @@
             <img src="{{ url_for('static', filename='images/homeside.jpeg') }}" alt="Jewelry Display" class="jewelry-image">
         </div>
     </main>
-
-    <!-- Footer -->
     <footer>
         <p>&copy; 2025 Color Seasons. All Rights Reserved.</p>
     </footer>

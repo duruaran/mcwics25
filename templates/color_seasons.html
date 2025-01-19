@@ -5,7 +5,7 @@
     <h1>Discover Your Seasonal Colors</h1>
     <p>Upload your photo to discover your personalized color palette and style tips!</p>
     <form id="upload-form" action="/analyze" method="POST" enctype="multipart/form-data">
-        <input id="image-input" type="file" name="image" accept="image/*" required>
+        <input type="file" name="image" accept="image/*" required>
         <button type="submit" class="btn">Analyze My Photo</button>
     </form>
 
@@ -19,18 +19,11 @@
 
 <script>
     const form = document.getElementById("upload-form");
-    const imageInput = document.getElementById("image-input");
     const resultsDiv = document.getElementById("results");
     const downloadLink = document.getElementById("download-link");
 
     // Hide results by default
     resultsDiv.style.display = "none";
-
-    // Reset results when a new file is selected
-    imageInput.addEventListener("change", () => {
-        resultsDiv.style.display = "none"; // Hide results section
-        downloadLink.href = ""; // Clear download link
-    });
 
     form.addEventListener("submit", async (event) => {
         event.preventDefault();
