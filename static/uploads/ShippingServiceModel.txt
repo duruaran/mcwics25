@@ -1,0 +1,7 @@
+# Shipping Service Example Model
+
+ShippingService: Regular, Expedited, Express
+PackageInsurance: Insured, Uninsured
+PackageSize: Small, Medium, Large
+SignaturesRequired: Required, NotRequired
+ReturnRequest: Return, NoReturn

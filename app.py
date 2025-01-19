@@ -75,10 +75,9 @@ def analyze():
 
         return send_file(output_pdf_path, as_attachment=True)
     else:
-        # Return an error message if no face is detected
+
         return jsonify({"error": season}), 400
 
-# Helper functions
 def detect_skin_tone_and_season(image_path):
     try:
         image = face_recognition.load_image_file(image_path)
@@ -116,11 +115,10 @@ def overlay_image_on_template(template_path, face_image_path, output_pdf_path):
 
         custom_pagesize = (1920, 1400)
 
-        # Create the overlay canvas
+
         c = canvas.Canvas(temp_pdf, pagesize=landscape(custom_pagesize))
 
-        # Adjust the y-coordinate to move the image further up
-        c.drawImage(face_image_path, 140, 750, width=200, height=200)  # Adjusted y=850 for a higher position
+        c.drawImage(face_image_path, 140, 750, width=200, height=200)  
         c.save()
 
         # Merge the overlay with the template
@@ -132,7 +130,6 @@ def overlay_image_on_template(template_path, face_image_path, output_pdf_path):
             template_page.merge_page(overlay_page)
             writer.add_page(template_page)
 
-        # Save the final PDF
         with open(output_pdf_path, "wb") as output_file:
             writer.write(output_file)
 

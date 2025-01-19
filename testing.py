@@ -8,7 +8,6 @@ class FunctionalTestCase(unittest.TestCase):
         """Set up the test client and test files."""
         app.testing = True
         self.client = app.test_client()
-        # Update the paths to match your folder structure
         self.test_image_path = os.path.join(os.getcwd(), "static", "uploads", "test_face.jpg")
         self.no_face_image_path = os.path.join(os.getcwd(), "static", "uploads", "no_face.jpg")
         self.invalid_file_path = os.path.join(os.getcwd(), "static", "uploads", "test_invalid.txt")
@@ -19,7 +18,7 @@ class FunctionalTestCase(unittest.TestCase):
             data = {"image": test_image}
             response = self.client.post("/analyze", data=data, content_type="multipart/form-data")
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b"%PDF", response.data)  # PDF files start with "%PDF"
+        self.assertIn(b"%PDF", response.data)  
 
 
 

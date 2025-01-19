@@ -25,14 +25,12 @@
     const resultsDiv = document.getElementById("results");
     const downloadLink = document.getElementById("download-link");
 
-    // Hide results by default
     resultsDiv.style.display = "none";
 
-    // Reset results when a new file is selected
     imageInput.addEventListener("change", () => {
-        resultsDiv.style.display = "none"; // Hide the results section
-        downloadLink.href = ""; // Reset the download link
-        downloadLink.download = ""; // Clear the download attribute
+        resultsDiv.style.display = "none"; 
+        downloadLink.href = ""; 
+        downloadLink.download = ""; 
     });
 
     form.addEventListener("submit", async (event) => {
@@ -41,7 +39,6 @@
         const formData = new FormData(form);
 
         try {
-            // Send the image to the Flask server
             const response = await fetch("/analyze", {
                 method: "POST",
                 body: formData,
@@ -51,13 +48,13 @@
                 const blob = await response.blob();
                 const url = URL.createObjectURL(blob);
 
-                // Show the results section and populate the download link
-                resultsDiv.style.display = "block"; // Make results visible
+
+                resultsDiv.style.display = "block"; 
                 downloadLink.href = url;
                 downloadLink.download = "Seasonal_Colors_Results.pdf";
             } else {
                 const error = await response.json();
-                alert("Error: " + error.error); // Show error message in a popup
+                alert("Error: " + error.error); 
             }
         } catch (error) {
             alert("An error occurred: " + error.message);

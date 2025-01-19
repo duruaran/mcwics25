@@ -5,14 +5,14 @@ body {
     padding: 0;
     background: url('/static/images/background.jpeg') no-repeat center center fixed;
     background-size: cover;
-    min-height: 100vh; /* Use min-height instead of height */
+    min-height: 100vh; 
     display: flex;
     flex-direction: column;
 }
 
 /* Navigation Bar */
 nav {
-    background-color: #a88f7d; /* Earthy color for the navbar */
+    background-color: #a88f7d; 
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
@@ -57,9 +57,9 @@ nav .nav-logo img {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 80px 20px 60px; /* Add top padding for the navbar and bottom for footer */
+    padding: 80px 20px 60px; 
     box-sizing: border-box;
-    overflow-y: auto; /* Enable scrolling if the content overflows */
+    overflow-y: auto; 
 }
 
 /* Content Section */
@@ -85,10 +85,10 @@ button,
 .file-label,
 .btn {
     display: inline-block;
-    background-color: #a88f7d; /* Earthy button color */
+    background-color: #a88f7d;
     color: white;
     padding: 10px 20px;
-    border-radius: 25px; /* Rounded corners */
+    border-radius: 25px;
     text-decoration: none;
     font-size: 1rem;
     font-weight: bold;
@@ -101,12 +101,12 @@ button,
 button:hover,
 .file-label:hover,
 .btn:hover {
-    background-color: #8c7866; /* Darker earthy tone for hover */
+    background-color: #8c7866;
 }
 
 /* Hide the default file input */
 .file-input {
-    display: none; /* Hides the original input */
+    display: none; 
 }
 
 /* Right Image Section */
@@ -139,11 +139,11 @@ footer {
 
 /* Overview Section */
 .overview-content {
-    margin: 20px auto; /* Center the content */
-    max-width: 80%; /* Restrict the width */
-    text-align: justify; /* Align text for better readability */
-    overflow: visible; /* Ensure content doesn't get cut off */
-    padding-bottom: 20px; /* Add padding for spacing */
+    margin: 20px auto; 
+    max-width: 80%; 
+    text-align: justify; 
+    overflow: visible; 
+    padding-bottom: 20px; 
 }
 
 .overview-content h1 {
@@ -165,13 +165,13 @@ footer {
 
 /* Hide the original file input */
 input[type="file"] {
-    display: none; /* Hides the default input */
+    display: none; 
 }
 
 /* Style the label as a button */
 label.btn {
     display: inline-block;
-    background-color: #a88f7d; /* Earthy button color */
+    background-color: #a88f7d; 
     color: white;
     padding: 10px 20px;
     border-radius: 25px;
@@ -185,5 +185,5 @@ label.btn {
 
 /* Add hover effect for the styled label */
 label.btn:hover {
-    background-color: #8c7866; /* Darker earthy tone for hover */
+    background-color: #8c7866;
 }
