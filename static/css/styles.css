@@ -80,6 +80,35 @@ nav .nav-logo img {
     margin-bottom: 1.5rem;
 }
 
+/* Button Styles */
+button,
+.file-label,
+.btn {
+    display: inline-block;
+    background-color: #a88f7d; /* Earthy button color */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px; /* Rounded corners */
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    border: none;
+}
+
+button:hover,
+.file-label:hover,
+.btn:hover {
+    background-color: #8c7866; /* Darker earthy tone for hover */
+}
+
+/* Hide the default file input */
+.file-input {
+    display: none; /* Hides the original input */
+}
+
 /* Right Image Section */
 .image-section {
     max-width: 50%;
@@ -132,4 +161,29 @@ footer {
     margin-bottom: 15px;
     font-weight: bold;
     max-width: 100%;
+}
+
+/* Hide the original file input */
+input[type="file"] {
+    display: none; /* Hides the default input */
+}
+
+/* Style the label as a button */
+label.btn {
+    display: inline-block;
+    background-color: #a88f7d; /* Earthy button color */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+/* Add hover effect for the styled label */
+label.btn:hover {
+    background-color: #8c7866; /* Darker earthy tone for hover */
 }
