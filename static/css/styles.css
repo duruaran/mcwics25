@@ -5,32 +5,30 @@ body {
     padding: 0;
     background: url('/static/images/background.jpeg') no-repeat center center fixed;
     background-size: cover;
-    height: 100vh; /* Set body height to full viewport height */
+    min-height: 100vh; /* Use min-height instead of height */
     display: flex;
     flex-direction: column;
 }
 
 /* Navigation Bar */
-/* Updated Navigation Bar Styles */
 nav {
     background-color: #a88f7d; /* Earthy color for the navbar */
     padding: 10px 20px;
     display: flex;
-    justify-content: space-between; /* Separate logo and links */
+    justify-content: space-between;
     align-items: center;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 1000;
-    height: 60px; /* Fixed navbar height */
-    box-sizing: border-box; /* Ensure padding is included in the width calculation */
+    height: 60px;
+    box-sizing: border-box;
 }
 
 .nav-links {
     display: flex;
-    gap: 20px; /* Add space between links */
-    margin-right: 10px; /* Add slight padding on the right side */
+    gap: 20px;
 }
 
 nav a {
@@ -38,34 +36,33 @@ nav a {
     text-decoration: none;
     font-size: 1rem;
     font-weight: bold;
-    padding: 0 10px; /* Add padding inside each link */
+    padding: 0 10px;
     transition: color 0.3s ease;
-    white-space: nowrap; /* Prevent text wrapping */
+    white-space: nowrap;
 }
 
 nav a:hover {
-    color: #f5e3d6; /* Lighter hover effect */
+    color: #f5e3d6;
 }
 
-/* Ensure the navbar stays within bounds */
 nav .nav-logo img {
-    height: 65px; /* Adjust logo size */
-    width: auto; /* Maintain aspect ratio */
-    margin-left: 10px; /* Add space on the left side */
+    height: 65px;
+    width: auto;
+    margin-left: 10px;
 }
 
 /* Page Layout */
 .page-layout {
-    flex: 1; /* Take up remaining space below the navbar */
+    flex: 1;
     display: flex;
     justify-content: space-between;
-    align-items: center; /* Center vertically */
-    padding: 20px;
-    height: calc(100vh - 60px); /* Full viewport height minus navbar */
-    box-sizing: border-box; /* Include padding in height calculation */
+    align-items: flex-start;
+    padding: 80px 20px 60px; /* Add top padding for the navbar and bottom for footer */
+    box-sizing: border-box;
+    overflow-y: auto; /* Enable scrolling if the content overflows */
 }
 
-/* Left Content Section */
+/* Content Section */
 .content-section {
     max-width: 50%;
     padding: 20px;
@@ -81,21 +78,6 @@ nav .nav-logo img {
 .content-section p {
     font-size: 1.2rem;
     margin-bottom: 1.5rem;
-}
-
-.content-section .btn {
-    background-color: #a88f7d; /* Earthy button color */
-    color: white;
-    padding: 10px 20px;
-    border-radius: 25px;
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-
-.content-section .btn:hover {
-    background-color: #8c7866;
 }
 
 /* Right Image Section */
@@ -116,7 +98,7 @@ nav .nav-logo img {
 
 /* Footer */
 footer {
-    background-color: #a88f7d; /* Match navbar color */
+    background-color: #a88f7d;
     color: white;
     text-align: center;
     padding: 10px 0;
@@ -126,20 +108,24 @@ footer {
     width: 100%;
 }
 
-/* Overview Section Styles */
+/* Overview Section */
 .overview-content {
-    margin-top: 20px; /* Push the title slightly down */
+    margin: 20px auto; /* Center the content */
+    max-width: 80%; /* Restrict the width */
+    text-align: justify; /* Align text for better readability */
+    overflow: visible; /* Ensure content doesn't get cut off */
+    padding-bottom: 20px; /* Add padding for spacing */
 }
 
 .overview-content h1 {
-    font-family: 'Times New Roman', Times, serif; /* Use Times New Roman */
+    font-family: 'Times New Roman', Times, serif;
     font-size: 3rem;
     color: #4a4a4a;
     margin-bottom: 20px;
 }
 
 .overview-content p {
-    font-family: 'Times New Roman', Times, serif; /* Use Times New Roman */
+    font-family: 'Times New Roman', Times, serif;
     font-size: 1.1rem;
     line-height: 1.6;
     color: #333;
@@ -147,4 +133,3 @@ footer {
     font-weight: bold;
     max-width: 100%;
 }
-
