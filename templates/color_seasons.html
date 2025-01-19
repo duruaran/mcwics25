@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Discover Your Seasonal Colors{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>Discover Your Seasonal Colors</h1>
+    <p>Upload your photo to discover your personalized color palette and style tips!</p>
+    <form id="upload-form" action="/analyze" method="POST" enctype="multipart/form-data">
+        <input id="image-input" type="file" name="image" accept="image/*" required>
+        <button type="submit" class="btn">Analyze My Photo</button>
+    </form>
+
+    <!-- Results Section (hidden by default) -->
+    <div id="results" class="hidden">
+        <h2>Your Results</h2>
+        <p>Your personalized seasonal color analysis is ready!</p>
+        <a id="download-link" class="btn" href="#" download>Download PDF</a>
+    </div>
+</div>
+
+<script>
+    const form = document.getElementById("upload-form");
+    const imageInput = document.getElementById("image-input");
+    const resultsDiv = document.getElementById("results");
+    const downloadLink = document.getElementById("download-link");
+
+    // Hide results by default
+    resultsDiv.style.display = "none";
+
+    // Reset results when a new file is selected
+    imageInput.addEventListener("change", () => {
+        resultsDiv.style.display = "none"; // Hide results section
+        downloadLink.href = ""; // Clear download link
+    });
+
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+
+        try {
+            // Send the image to the Flask server
+            const response = await fetch("/analyze", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (response.ok) {
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+
+                // Show the results section and populate the download link
+                resultsDiv.style.display = "block"; // Make results visible
+                downloadLink.href = url;
+                downloadLink.download = "Seasonal_Colors_Results.pdf";
+            } else {
+                const error = await response.json();
+                alert("Error: " + error.error); // Show error message in a popup
+            }
+        } catch (error) {
+            alert("An error occurred: " + error.message);
+        }
+    });
+</script>
+{% endblock %}

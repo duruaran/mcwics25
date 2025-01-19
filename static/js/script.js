@@ -1,9 +1,8 @@
 document.getElementById("upload-form").addEventListener("submit", async function (event) {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
 
     const formData = new FormData();
     const fileInput = document.getElementById("image");
-    const resultDiv = document.getElementById("result");
 
     if (!fileInput.files[0]) {
         alert("Please select an image file to upload.");
@@ -11,9 +10,6 @@ document.getElementById("upload-form").addEventListener("submit", async function
     }
 
     formData.append("image", fileInput.files[0]);
-
-    resultDiv.classList.remove("hidden");
-    resultDiv.innerHTML = "<h2>Processing...</h2><p>Your result will appear here shortly.</p>";
 
     try {
         const response = await fetch("/analyze", {
@@ -26,16 +22,19 @@ document.getElementById("upload-form").addEventListener("submit", async function
             throw new Error(errorData.error || "An error occurred while processing the image.");
         }
 
-        // Get the PDF file URL
+        // For successful response, handle PDF download
         const blob = await response.blob();
         const fileURL = URL.createObjectURL(blob);
 
+        // Display the PDF download link
+        const resultDiv = document.getElementById("result");
         resultDiv.innerHTML = `
             <h2>Analysis Complete!</h2>
-            <p>Your seasonal color type has been determined. Download your personalized result below:</p>
-            <a href="${fileURL}" download="Skin_Tone_Analysis.pdf">Download PDF</a>
+            <p>Your seasonal color type has been determined.</p>
+            <a href="${fileURL}" download="Analysis_Result.pdf" class="btn">Download PDF</a>
         `;
+        resultDiv.classList.remove("hidden");
     } catch (error) {
-        resultDiv.innerHTML = `<h2>Error</h2><p>${error.message}</p>`;
+        alert(`Error: ${error.message}`);
     }
 });

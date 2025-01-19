@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="/">Home</a>
+        <a href="/about_us">About Us</a>
+        <a href="/references">References</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="page-layout">
+        <!-- Left Content Section -->
+        <div class="content-section">
+            {% block content %}{% endblock %}
+        </div>
+
+        <!-- Right Image Section -->
+        <div class="image-section">
+            <img src="{{ url_for('static', filename='images/homeside.jpeg') }}" alt="Jewelry Display" class="jewelry-image">
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Color Seasons. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

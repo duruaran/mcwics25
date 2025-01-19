@@ -41,12 +41,23 @@ y = np.array([season for season, colors in palette_colors.items() for _ in color
 classifier = KMeans(n_clusters=len(palette_colors), random_state=42)
 classifier.fit(X)
 
-# Serve the index page
+# Routes
 @app.route("/")
 def home():
     return render_template("index.html")
 
-# Analyze route for processing images
+@app.route("/about_us")
+def about_us():
+    return render_template("about_us.html")
+
+@app.route("/references")
+def references():
+    return render_template("references.html")
+
+@app.route("/color_seasons")
+def color_seasons():
+    return render_template("color_seasons.html")
+
 @app.route("/analyze", methods=["POST"])
 def analyze():
     if "image" not in request.files:
@@ -64,6 +75,7 @@ def analyze():
 
         return send_file(output_pdf_path, as_attachment=True)
     else:
+        # Return an error message if no face is detected
         return jsonify({"error": season}), 400
 
 # Helper functions
@@ -97,15 +109,21 @@ def detect_skin_tone_and_season(image_path):
 def overlay_image_on_template(template_path, face_image_path, output_pdf_path):
     try:
         from reportlab.pdfgen import canvas
-        from reportlab.lib.pagesizes import letter
+        from reportlab.lib.pagesizes import letter, landscape
         from PyPDF2 import PdfReader, PdfWriter
 
         temp_pdf = os.path.join(RESULTS_FOLDER, "temp_overlay.pdf")
 
-        c = canvas.Canvas(temp_pdf, pagesize=letter)
-        c.drawImage(face_image_path, 100, 500, width=100, height=100)
+        custom_pagesize = (1920, 1400)
+
+        # Create the overlay canvas
+        c = canvas.Canvas(temp_pdf, pagesize=landscape(custom_pagesize))
+
+        # Adjust the y-coordinate to move the image further up
+        c.drawImage(face_image_path, 140, 750, width=200, height=200)  # Adjusted y=850 for a higher position
         c.save()
 
+        # Merge the overlay with the template
         template_reader = PdfReader(template_path)
         overlay_reader = PdfReader(temp_pdf)
         writer = PdfWriter()
@@ -114,10 +132,13 @@ def overlay_image_on_template(template_path, face_image_path, output_pdf_path):
             template_page.merge_page(overlay_page)
             writer.add_page(template_page)
 
+        # Save the final PDF
         with open(output_pdf_path, "wb") as output_file:
             writer.write(output_file)
+
     except Exception as e:
         print(f"ERROR: Failed to overlay image on template. {e}")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
