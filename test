@@ -1,0 +1,26 @@
+import os
+from app import detect_skin_tone_and_season, UPLOAD_FOLDER
+
+def test_season_detection():
+    # Directory containing test images
+    test_images_dir = UPLOAD_FOLDER
+
+    # Iterate over all files in the directory
+    for filename in os.listdir(test_images_dir):
+        file_path = os.path.join(test_images_dir, filename)
+
+        # Check if the file is an image based on its extension
+        if filename.lower().endswith((".jpg", ".jpeg", ".png")):
+            print(f"Processing: {filename}")
+
+            # Detect the season for the image
+            avg_skin_tone, season = detect_skin_tone_and_season(file_path)
+
+            # Print the results
+            if avg_skin_tone is not None:
+                print(f"Image: {filename} -> Season: {season}")
+            else:
+                print(f"Image: {filename} -> Error: {season}")
+
+if __name__ == "__main__":
+    test_season_detection()
